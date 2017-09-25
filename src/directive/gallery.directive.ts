@@ -42,13 +42,13 @@ export class GalleryDirective implements OnInit {
       const classes = (this.gallerize) ? this.gallerize.split(' ').map((className) => '.' + className) : '';
 
       // get all img elements from content
-      const imageElements = target.querySelectorAll(this.subtree+` img${classes}`) 
+      const imageElements = target.querySelectorAll(this.subtree + ` img${classes}`)
 
       if (!imageElements || !imageElements.length) {
         this.srcList = [];
         return;
       }
-      
+
       let srcs = pluck(imageElements, 'src');
 
       // skip if urls same 
@@ -62,7 +62,10 @@ export class GalleryDirective implements OnInit {
         // add click event to the images
         this.renderer.setStyle(img, 'cursor', 'pointer');
         this.renderer.setProperty(img, 'onclick', () => {
-          this.gallery.set(i);
+          if (this.srcList.indexOf(img.src) !== -1) {
+            this.gallery.set(i);
+          }
+
         });
 
         // create an image item
