@@ -20,6 +20,7 @@ export class GalleryDirective implements OnInit {
 
   @Input() gallerize: string;
   @Input() subtree: string = '';
+  @Input() filter: Function;
 
   constructor(public el: ElementRef, public renderer: Renderer2, public gallery: GalleryService) {
   }
@@ -61,12 +62,14 @@ export class GalleryDirective implements OnInit {
       Observable.from(imageElements).map((img: HTMLImageElement, i) => {
         // add click event to the images
         this.renderer.setStyle(img, 'cursor', 'pointer');
-        this.renderer.setProperty(img, 'onclick', () => {
-          if (this.srcList.indexOf(img.src) !== -1) {
-            this.gallery.set(i);
-          }
+        if (!this.filter || this.filter(img)) {
+          this.renderer.setProperty(img, 'onclick', () => {
+            if (this.srcList.indexOf(img.src) !== -1) {
+              this.gallery.set(i);
+            }
 
-        });
+          });
+        }
 
         // create an image item
         images.push({

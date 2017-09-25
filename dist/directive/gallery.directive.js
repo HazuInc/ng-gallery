@@ -42,11 +42,13 @@ var GalleryDirective = (function () {
             Observable.from(imageElements).map(function (img, i) {
                 // add click event to the images
                 _this.renderer.setStyle(img, 'cursor', 'pointer');
-                _this.renderer.setProperty(img, 'onclick', function () {
-                    if (_this.srcList.indexOf(img.src) !== -1) {
-                        _this.gallery.set(i);
-                    }
-                });
+                if (!_this.filter || _this.filter(img)) {
+                    _this.renderer.setProperty(img, 'onclick', function () {
+                        if (_this.srcList.indexOf(img.src) !== -1) {
+                            _this.gallery.set(i);
+                        }
+                    });
+                }
                 // create an image item
                 images.push({
                     src: img.src,
@@ -79,5 +81,6 @@ GalleryDirective.ctorParameters = function () { return [
 GalleryDirective.propDecorators = {
     'gallerize': [{ type: Input },],
     'subtree': [{ type: Input },],
+    'filter': [{ type: Input },],
 };
 //# sourceMappingURL=gallery.directive.js.map
