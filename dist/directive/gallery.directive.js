@@ -36,6 +36,17 @@ var GalleryDirective = (function () {
             var srcs = pluck(imageElements, 'src');
             // skip if urls same 
             if (isEqual(_this.srcList, srcs)) {
+                Observable.from(imageElements).map(function (img, i) {
+                    // add click event to the images
+                    _this.renderer.setStyle(img, 'cursor', 'pointer');
+                    if (!_this.filter || _this.filter(img)) {
+                        _this.renderer.setProperty(img, 'onclick', function () {
+                            if (_this.srcList.indexOf(img.src) !== -1) {
+                                _this.gallery.set(i);
+                            }
+                        });
+                    }
+                });
                 return;
             }
             _this.srcList = srcs;
