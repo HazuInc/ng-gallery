@@ -51,50 +51,32 @@ export class GalleryDirective implements OnInit {
       }
 
       let srcs = pluck(imageElements, 'src');
+      let isSame = isEqual(this.srcList, srcs);
 
-      // skip if urls same 
-      if (isEqual(this.srcList, srcs)) {
-        this.srcList = srcs;
-        Observable.from(imageElements).map((img: HTMLImageElement, i) => {
-          // add click event to the images
-          this.renderer.setStyle(img, 'cursor', 'pointer');
-          if (!this.filter || this.filter(img)) {
-            this.renderer.setProperty(img, 'onclick', () => {
-              if (this.srcList.indexOf(img.src) !== -1) {
-                this.gallery.set(i);
-              }
+      Observable.from(imageElements).map((img: HTMLImageElement, i) => {
+        // add click event to the images
+        this.renderer.setStyle(img, 'cursor', 'pointer');
+        if (!this.filter || this.filter(img)) {
+          this.renderer.setProperty(img, 'onclick', () => {
+            if (this.srcList.indexOf(img.src) !== -1) {
+              this.gallery.set(i);
+            }
 
-            });
-          }
-        });
-
-      } else {
-
-        this.srcList = srcs;
-
-        Observable.from(imageElements).map((img: HTMLImageElement, i) => {
-          // add click event to the images
-          this.renderer.setStyle(img, 'cursor', 'pointer');
-          if (!this.filter || this.filter(img)) {
-            this.renderer.setProperty(img, 'onclick', () => {
-              if (this.srcList.indexOf(img.src) !== -1) {
-                this.gallery.set(i);
-              }
-
-            });
-          }
-
-          // create an image item
-          images.push({
-            src: img.src,
-            text: img.alt
           });
+        }
+
+        // create an image item
+        images.push({
+          src: img.src,
+          text: img.alt
+        });
+      })
+        .finally(() => {
+          if (!isSame) {
+            this.gallery.load(images)
+          }
         })
-          .finally(() => this.gallery.load(images))
-          .subscribe();
-      }
-
-
+        .subscribe();
     }
     // create an observer instance
     var observer = new MutationObserver(updateGallery);
