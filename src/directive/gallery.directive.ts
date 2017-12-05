@@ -62,36 +62,37 @@ export class GalleryDirective implements OnInit {
               if (this.srcList.indexOf(img.src) !== -1) {
                 this.gallery.set(i);
               }
-  
+
             });
           }
         });
-        
+
         return;
-      }
+      } else {
 
-      this.srcList = srcs;
+        this.srcList = srcs;
 
-      Observable.from(imageElements).map((img: HTMLImageElement, i) => {
-        // add click event to the images
-        this.renderer.setStyle(img, 'cursor', 'pointer');
-        if (!this.filter || this.filter(img)) {
-          this.renderer.setProperty(img, 'onclick', () => {
-            if (this.srcList.indexOf(img.src) !== -1) {
-              this.gallery.set(i);
-            }
+        Observable.from(imageElements).map((img: HTMLImageElement, i) => {
+          // add click event to the images
+          this.renderer.setStyle(img, 'cursor', 'pointer');
+          if (!this.filter || this.filter(img)) {
+            this.renderer.setProperty(img, 'onclick', () => {
+              if (this.srcList.indexOf(img.src) !== -1) {
+                this.gallery.set(i);
+              }
 
+            });
+          }
+
+          // create an image item
+          images.push({
+            src: img.src,
+            text: img.alt
           });
-        }
-
-        // create an image item
-        images.push({
-          src: img.src,
-          text: img.alt
-        });
-      })
-        .finally(() => this.gallery.load(images))
-        .subscribe();
+        })
+          .finally(() => this.gallery.load(images))
+          .subscribe();
+      }
 
 
     }
