@@ -36,6 +36,7 @@ var GalleryDirective = (function () {
             var srcs = pluck(imageElements, 'src');
             // skip if urls same 
             if (isEqual(_this.srcList, srcs)) {
+                _this.srcList = srcs;
                 Observable.from(imageElements).map(function (img, i) {
                     // add click event to the images
                     _this.renderer.setStyle(img, 'cursor', 'pointer');
@@ -47,7 +48,6 @@ var GalleryDirective = (function () {
                         });
                     }
                 });
-                return;
             }
             else {
                 _this.srcList = srcs;

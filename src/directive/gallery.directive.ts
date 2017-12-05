@@ -54,6 +54,7 @@ export class GalleryDirective implements OnInit {
 
       // skip if urls same 
       if (isEqual(this.srcList, srcs)) {
+        this.srcList = srcs;
         Observable.from(imageElements).map((img: HTMLImageElement, i) => {
           // add click event to the images
           this.renderer.setStyle(img, 'cursor', 'pointer');
@@ -67,7 +68,6 @@ export class GalleryDirective implements OnInit {
           }
         });
 
-        return;
       } else {
 
         this.srcList = srcs;
