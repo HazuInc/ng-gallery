@@ -52,7 +52,7 @@ export class GalleryDirective implements OnInit {
 
       let srcs = pluck(imageElements, 'src');
       let isSame = isEqual(this.srcList, srcs);
-
+      this.srcList = srcs;
       Observable.from(imageElements).map((img: HTMLImageElement, i) => {
         // add click event to the images
         this.renderer.setStyle(img, 'cursor', 'pointer');

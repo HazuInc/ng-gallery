@@ -35,6 +35,7 @@ var GalleryDirective = (function () {
             }
             var srcs = pluck(imageElements, 'src');
             var isSame = isEqual(_this.srcList, srcs);
+            _this.srcList = srcs;
             Observable.from(imageElements).map(function (img, i) {
                 // add click event to the images
                 _this.renderer.setStyle(img, 'cursor', 'pointer');
