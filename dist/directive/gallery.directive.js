@@ -1,6 +1,6 @@
 import { Directive, ElementRef, Renderer2, Input } from '@angular/core';
 import { GalleryService } from '../service/gallery.service';
-import { isEqual, pluck } from '../utils/index';
+import { isEqual } from '../utils/index';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/fromEvent';
 import 'rxjs/add/observable/from';
@@ -33,22 +33,26 @@ var GalleryDirective = (function () {
                 _this.srcList = [];
                 return;
             }
-            var srcs = pluck(imageElements, 'src');
+            var srcs = Array.from(imageElements).map(function (elem) {
+                return elem.dataset && elem.dataset.originalImageUrl ? elem.dataset.originalImageUrl : elem.src;
+            });
+            //let srcs = pluck(imageElements, 'src');
             var isSame = isEqual(_this.srcList, srcs);
             _this.srcList = srcs;
             Observable.from(imageElements).map(function (img, i) {
                 // add click event to the images
+                var src = img.dataset && img.dataset.originalImageUrl ? img.dataset.originalImageUrl : img.src;
                 _this.renderer.setStyle(img, 'cursor', 'pointer');
                 if (!_this.filter || _this.filter(img)) {
                     _this.renderer.setProperty(img, 'onclick', function () {
-                        if (_this.srcList.indexOf(img.src) !== -1) {
+                        if (_this.srcList.indexOf(src) !== -1) {
                             _this.gallery.set(i);
                         }
                     });
                 }
                 // create an image item
                 images.push({
-                    src: img.src,
+                    src: src,
                     text: img.alt
                 });
             })

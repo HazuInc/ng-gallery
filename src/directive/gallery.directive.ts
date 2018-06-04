@@ -50,15 +50,19 @@ export class GalleryDirective implements OnInit {
         return;
       }
 
-      let srcs = pluck(imageElements, 'src');
+      let srcs = Array.from(imageElements).map((elem: HTMLImageElement) => {
+        return elem.dataset && elem.dataset.originalImageUrl ? elem.dataset.originalImageUrl : elem.src
+      })
+      //let srcs = pluck(imageElements, 'src');
       let isSame = isEqual(this.srcList, srcs);
       this.srcList = srcs;
       Observable.from(imageElements).map((img: HTMLImageElement, i) => {
         // add click event to the images
+        let src = img.dataset && img.dataset.originalImageUrl ? img.dataset.originalImageUrl : img.src;
         this.renderer.setStyle(img, 'cursor', 'pointer');
         if (!this.filter || this.filter(img)) {
           this.renderer.setProperty(img, 'onclick', () => {
-            if (this.srcList.indexOf(img.src) !== -1) {
+            if (this.srcList.indexOf(src) !== -1) {
               this.gallery.set(i);
             }
 
@@ -67,7 +71,7 @@ export class GalleryDirective implements OnInit {
 
         // create an image item
         images.push({
-          src: img.src,
+          src: src,
           text: img.alt
         });
       })
