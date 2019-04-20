@@ -1,5 +1,5 @@
 import { ElementRef, EventEmitter, Renderer2 } from '@angular/core';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 export declare class LazyDirective {
     private el;
     private renderer;

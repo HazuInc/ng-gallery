@@ -5,18 +5,10 @@ import { GalleryConfig } from '../config/gallery.config';
 import { defaultState, defaultConfig } from '../config/gallery.default';
 
 import { get } from '../utils/get';
+import { Subject } from 'rxjs';
 
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
-
-import 'rxjs/add/observable/of';
-import 'rxjs/add/observable/interval';
-import 'rxjs/add/operator/switchMap';
-import 'rxjs/add/operator/finally';
-import 'rxjs/add/operator/take';
-import 'rxjs/add/operator/takeWhile';
-import 'rxjs/add/operator/do';
+import { BehaviorSubject, Observable, of, interval as rxInterval } from 'rxjs';
+import { switchMap, tap, takeWhile, finalize } from 'rxjs/operators';
 
 export class GalleryService {
 
@@ -27,7 +19,7 @@ export class GalleryService {
   /** Gallery slide show player */
   player: Subject<number>;
 
-  constructor( @Optional() config: GalleryConfig) {
+  constructor(@Optional() config: GalleryConfig) {
 
     /** Initialize the state */
     this.state = new BehaviorSubject<GalleryState>(defaultState);
@@ -36,7 +28,7 @@ export class GalleryService {
 
     /** Initialize the player for play/pause commands */
     this.player = new Subject();
-    this.player.switchMap((interval) => (interval) ? this.playerEngine(interval) : Observable.of(null)).subscribe();
+    this.player.pipe(switchMap((interval) => (interval) ? this.playerEngine(interval) : of(null))).subscribe();
   }
 
   /** Load images and reset the state */
@@ -122,10 +114,10 @@ export class GalleryService {
 
   playerEngine(interval?: number) {
 
-    return Observable.interval(interval)
-      .takeWhile(() => this.state.getValue().play || false)
-      .do(() => this.next())
-      .finally(() => this.state.next(Object.assign({}, this.state.getValue(), { play: false })));
+    return rxInterval(interval).pipe(
+      takeWhile(() => this.state.getValue().play || false),
+      tap(() => this.next()),
+      finalize(() => this.state.next(Object.assign({}, this.state.getValue(), { play: false }))));
 
   }
 

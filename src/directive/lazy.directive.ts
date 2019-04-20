@@ -7,9 +7,9 @@ import {
   Renderer2
 } from '@angular/core';
 
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
-// import 'rxjs/add/operator/delay';
+import { Observable, Subject, of } from 'rxjs';
+import { switchMap, tap, takeWhile, finalize } from 'rxjs/operators';
+
 
 @Directive({
   selector: '[lazyImage]'
@@ -29,7 +29,7 @@ export class LazyDirective {
   constructor(private el: ElementRef, private renderer: Renderer2) {
 
     // this.lazyTest.switchMap((done) => (done) ? Observable.of(done).delay(1000) : Observable.of(done)
-    this.lazyWorker.switchMap((done) => Observable.of(done))
+    this.lazyWorker.pipe(switchMap((done) => of(done)))
       .subscribe((img) => {
         if (img) {
           this.renderer.setProperty(this.el.nativeElement, 'src', img);
@@ -49,7 +49,7 @@ export class LazyDirective {
       this.lazyWorker.next(imagePath);
     };
 
-    img.onerror = (err:any) => {
+    img.onerror = (err: any) => {
       console.error('[GalleryLazyDirective]:', err);
       this.lazyWorker.next('');
     };

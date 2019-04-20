@@ -3,11 +3,8 @@ import { GalleryService } from '../service/gallery.service';
 import { GalleryImage } from '../service/gallery.state';
 import { isEqual, pluck } from '../utils/index';
 
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/fromEvent';
-import 'rxjs/add/observable/from';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/finally';
+import { from } from 'rxjs';
+import { map, finalize } from 'rxjs/operators';
 
 @Directive({
   selector: '[gallerize]'
@@ -56,7 +53,7 @@ export class GalleryDirective implements OnInit {
       //let srcs = pluck(imageElements, 'src');
       let isSame = isEqual(this.srcList, srcs);
       this.srcList = srcs;
-      Observable.from(imageElements).map((img: HTMLImageElement, i) => {
+      from(imageElements).pipe(map((img: HTMLImageElement, i) => {
         // add click event to the images
         let src = img.dataset && img.dataset.originalImageUrl ? img.dataset.originalImageUrl : img.src;
         this.renderer.setStyle(img, 'cursor', 'pointer');
@@ -74,12 +71,12 @@ export class GalleryDirective implements OnInit {
           src: src,
           text: img.alt
         });
-      })
-        .finally(() => {
+      }),
+        finalize(() => {
           if (!isSame) {
             this.gallery.load(images)
           }
-        })
+        }))
         .subscribe();
     }
     // create an observer instance

@@ -28,7 +28,6 @@ export var defaultConfig = {
             color: 'red'
         }
     },
-    bullets: false,
     player: {
         autoplay: false,
         speed: 3000

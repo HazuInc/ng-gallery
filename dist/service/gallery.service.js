@@ -1,17 +1,22 @@
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 import { Optional } from '@angular/core';
 import { defaultState, defaultConfig } from '../config/gallery.default';
 import { get } from '../utils/get';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
-import 'rxjs/add/observable/of';
-import 'rxjs/add/observable/interval';
-import 'rxjs/add/operator/switchMap';
-import 'rxjs/add/operator/finally';
-import 'rxjs/add/operator/take';
-import 'rxjs/add/operator/takeWhile';
-import 'rxjs/add/operator/do';
-var GalleryService = (function () {
+import { Subject } from 'rxjs';
+import { BehaviorSubject, of, interval as rxInterval } from 'rxjs';
+import { switchMap, tap, takeWhile, finalize } from 'rxjs/operators';
+var GalleryService = /** @class */ (function () {
     function GalleryService(config) {
         var _this = this;
         /** Gallery config */
@@ -22,7 +27,7 @@ var GalleryService = (function () {
         this.config = Object.assign({}, defaultConfig, config);
         /** Initialize the player for play/pause commands */
         this.player = new Subject();
-        this.player.switchMap(function (interval) { return (interval) ? _this.playerEngine(interval) : Observable.of(null); }).subscribe();
+        this.player.pipe(switchMap(function (interval) { return (interval) ? _this.playerEngine(interval) : of(null); })).subscribe();
     }
     /** Load images and reset the state */
     GalleryService.prototype.load = function (images) {
@@ -95,16 +100,13 @@ var GalleryService = (function () {
     };
     GalleryService.prototype.playerEngine = function (interval) {
         var _this = this;
-        return Observable.interval(interval)
-            .takeWhile(function () { return _this.state.getValue().play || false; })
-            .do(function () { return _this.next(); })
-            .finally(function () { return _this.state.next(Object.assign({}, _this.state.getValue(), { play: false })); });
+        return rxInterval(interval).pipe(takeWhile(function () { return _this.state.getValue().play || false; }), tap(function () { return _this.next(); }), finalize(function () { return _this.state.next(Object.assign({}, _this.state.getValue(), { play: false })); }));
     };
+    GalleryService = __decorate([
+        __param(0, Optional()),
+        __metadata("design:paramtypes", [Object])
+    ], GalleryService);
     return GalleryService;
 }());
 export { GalleryService };
-/** @nocollapse */
-GalleryService.ctorParameters = function () { return [
-    { type: undefined, decorators: [{ type: Optional },] },
-]; };
 //# sourceMappingURL=gallery.service.js.map

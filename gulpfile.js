@@ -207,19 +207,19 @@ gulp.task('package', (cb) => {
     targetPkgJson['typings'] = 'index.d.ts';
 
     // defines project's dependencies as 'peerDependencies' for final users
-    targetPkgJson.peerDependencies = {};
-    Object.keys(pkgJson.dependencies).forEach((dependency) => {
-        if (dependency.startsWith('@angular/')) {
-            // narrow version of @angular packages to address bug with JSONP inroduced in [2.4.6, 2.4.8[ && [4.0.0-beta.6, 4.0.0-beta.8[
-            // see https://github.com/angular/angular/pull/13219 and changelog
-            targetPkgJson.peerDependencies[dependency] = `>=2.0.0 <2.4.6 || >=2.4.8 <4.0.0-beta.6 || >=4.0.0-beta.8`;
-        }
-        else {
-            targetPkgJson.peerDependencies[dependency] = `^${pkgJson.dependencies[dependency]}`;
+    // targetPkgJson.peerDependencies = {};
+    // Object.keys(pkgJson.dependencies).forEach((dependency) => {
+    //     if (dependency.startsWith('@angular/')) {
+    //         // narrow version of @angular packages to address bug with JSONP inroduced in [2.4.6, 2.4.8[ && [4.0.0-beta.6, 4.0.0-beta.8[
+    //         // see https://github.com/angular/angular/pull/13219 and changelog
+    //         targetPkgJson.peerDependencies[dependency] = `>=2.0.0 <2.4.6 || >=2.4.8 <4.0.0-beta.6 || >=4.0.0-beta.8`;
+    //     }
+    //     else {
+    //         targetPkgJson.peerDependencies[dependency] = `^${pkgJson.dependencies[dependency]}`;
 
-        }
+    //     }
 
-    });
+    // });
 
     // copy the needed additional files in the 'dist' folder
     pump(
@@ -305,7 +305,7 @@ gulp.task('coveralls', () => {
 
 // Lint, Sass to css, Inline templates & Styles and Compile
 gulp.task('compile', (cb) => {
-    runSequence('lint', 'inline-templates', 'ngc', cb);
+    runSequence( 'inline-templates', 'ngc', cb);
 });
 
 // Watch changes on (*.ts, *.sass, *.html) and Compile

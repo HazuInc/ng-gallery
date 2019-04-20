@@ -1,1 +1,1 @@
-{"version":3,"sources":[],"names":[],"mappings":"","file":"gallery.state.js","sourceRoot":"","sourcesContent":[]}
+{"version":3,"file":"gallery.state.js","sourceRoot":"","sources":["../inlined/service/gallery.state.ts"],"names":[],"mappings":"","sourcesContent":["export interface GalleryState {\n  active: boolean;\n  play?: boolean;\n  images?: GalleryImage[];\n  prevIndex?: number;\n  currIndex?: number;\n  hasNext?: boolean;\n  hasPrev?: boolean;\n}\n\nexport interface GalleryImage {\n  src: string;\n  thumbnail?: string;\n  text?: string;\n}\n"]}

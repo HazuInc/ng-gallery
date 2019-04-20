@@ -1,6 +1,15 @@
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { GalleryService } from '../../service/gallery.service';
-var GalleryLoaderComponent = (function () {
+var GalleryLoaderComponent = /** @class */ (function () {
     function GalleryLoaderComponent(gallery) {
         this.gallery = gallery;
     }
@@ -57,22 +66,20 @@ var GalleryLoaderComponent = (function () {
                 };
         }
     };
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], GalleryLoaderComponent.prototype, "config", void 0);
+    GalleryLoaderComponent = __decorate([
+        Component({
+            selector: 'gallery-loader',
+            template: "\n    <div class=\"g-loader\" [ngStyle]=\"styles\">\n      <img [src]=\"icon\" [style.width]=\"config.width\" [style.height]=\"config.height\"/>\n    </div>\n  ",
+            styles: ["\n    *{box-sizing:border-box}:host{z-index:1}.g-loader{z-index:2;position:absolute;width:100%;height:100%;display:-ms-flexbox;display:flex;padding:1em}\n  "],
+            changeDetection: ChangeDetectionStrategy.OnPush
+        }),
+        __metadata("design:paramtypes", [GalleryService])
+    ], GalleryLoaderComponent);
     return GalleryLoaderComponent;
 }());
 export { GalleryLoaderComponent };
-GalleryLoaderComponent.decorators = [
-    { type: Component, args: [{
-                selector: 'gallery-loader',
-                template: "\n    <div class=\"g-loader\" [ngStyle]=\"styles\">\n      <img [src]=\"icon\" [style.width]=\"config.width\" [style.height]=\"config.height\"/>\n    </div>\n  ",
-                styles: ["\n    *{box-sizing:border-box}:host{z-index:1}.g-loader{z-index:2;position:absolute;width:100%;height:100%;display:-webkit-box;display:-ms-flexbox;display:flex;padding:1em}\n  "],
-                changeDetection: ChangeDetectionStrategy.OnPush
-            },] },
-];
-/** @nocollapse */
-GalleryLoaderComponent.ctorParameters = function () { return [
-    { type: GalleryService, },
-]; };
-GalleryLoaderComponent.propDecorators = {
-    'config': [{ type: Input },],
-};
 //# sourceMappingURL=gallery-loader.component.js.map

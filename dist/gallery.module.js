@@ -1,3 +1,9 @@
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
 import { NgModule, InjectionToken } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { GalleryService } from './service/gallery.service';
@@ -19,12 +25,13 @@ export function galleryFactory(config) {
     return new GalleryService(config);
 }
 export var CONFIG = new InjectionToken('config');
-var GalleryModule = (function () {
+var GalleryModule = /** @class */ (function () {
     function GalleryModule() {
     }
+    GalleryModule_1 = GalleryModule;
     GalleryModule.forRoot = function (config) {
         return {
-            ngModule: GalleryModule,
+            ngModule: GalleryModule_1,
             providers: [
                 { provide: CONFIG, useValue: config },
                 {
@@ -35,36 +42,35 @@ var GalleryModule = (function () {
             ]
         };
     };
+    var GalleryModule_1;
+    GalleryModule = GalleryModule_1 = __decorate([
+        NgModule({
+            imports: [
+                CommonModule
+            ],
+            declarations: [
+                GalleryComponent,
+                GalleryNavComponent,
+                GalleryThumbComponent,
+                GalleryDirective,
+                GalleryTextComponent,
+                GalleryImageComponent,
+                GalleryLoaderComponent,
+                GalleryModalComponent,
+                GalleryBulletsComponent,
+                GalleryPlayerComponent,
+                GalleryMainComponent,
+                TapDirective,
+                LazyDirective
+            ],
+            exports: [
+                GalleryComponent,
+                GalleryDirective,
+                GalleryModalComponent
+            ]
+        })
+    ], GalleryModule);
     return GalleryModule;
 }());
 export { GalleryModule };
-GalleryModule.decorators = [
-    { type: NgModule, args: [{
-                imports: [
-                    CommonModule
-                ],
-                declarations: [
-                    GalleryComponent,
-                    GalleryNavComponent,
-                    GalleryThumbComponent,
-                    GalleryDirective,
-                    GalleryTextComponent,
-                    GalleryImageComponent,
-                    GalleryLoaderComponent,
-                    GalleryModalComponent,
-                    GalleryBulletsComponent,
-                    GalleryPlayerComponent,
-                    GalleryMainComponent,
-                    TapDirective,
-                    LazyDirective
-                ],
-                exports: [
-                    GalleryComponent,
-                    GalleryDirective,
-                    GalleryModalComponent
-                ]
-            },] },
-];
-/** @nocollapse */
-GalleryModule.ctorParameters = function () { return []; };
 //# sourceMappingURL=gallery.module.js.map

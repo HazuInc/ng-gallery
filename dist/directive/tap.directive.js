@@ -1,7 +1,16 @@
 /** This directive enable tap if HammerJS is loaded, otherwise it uses the normal click event (useful for thumbnail click) */
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 import { Directive, ElementRef, EventEmitter, Input, Output, Renderer2 } from '@angular/core';
 import { GalleryService } from '../service/gallery.service';
-var TapDirective = (function () {
+var TapDirective = /** @class */ (function () {
     function TapDirective(gallery, el, renderer) {
         this.gallery = gallery;
         this.el = el;
@@ -35,22 +44,21 @@ var TapDirective = (function () {
             });
         }
     };
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], TapDirective.prototype, "tap", void 0);
+    __decorate([
+        Output(),
+        __metadata("design:type", Object)
+    ], TapDirective.prototype, "tapClick", void 0);
+    TapDirective = __decorate([
+        Directive({
+            selector: '[tap]'
+        }),
+        __metadata("design:paramtypes", [GalleryService, ElementRef, Renderer2])
+    ], TapDirective);
     return TapDirective;
 }());
 export { TapDirective };
-TapDirective.decorators = [
-    { type: Directive, args: [{
-                selector: '[tap]'
-            },] },
-];
-/** @nocollapse */
-TapDirective.ctorParameters = function () { return [
-    { type: GalleryService, },
-    { type: ElementRef, },
-    { type: Renderer2, },
-]; };
-TapDirective.propDecorators = {
-    'tap': [{ type: Input },],
-    'tapClick': [{ type: Output },],
-};
 //# sourceMappingURL=tap.directive.js.map
