@@ -107,7 +107,7 @@ gulp.task('clean:coverage', () => {
     return del(config.coverageDir);
 });
 
-gulp.task('clean', ['clean:dist', 'clean:coverage']);
+gulp.task('clean', gulp.parallel('clean:dist', 'clean:coverage'));
 
 // TsLint the source files
 gulp.task('lint', (cb) => {
@@ -177,9 +177,9 @@ gulp.task('test', (cb) => {
     startKarmaServer(false, true, cb);
 });
 
-gulp.task('test:ci', ['clean'], (cb) => {
+gulp.task('test:ci', gulp.series('clean', (cb) => {
     runSequence('compile', 'test');
-});
+}));
 
 gulp.task('test:watch', (cb) => {
     const ENV = process.env.NODE_ENV = process.env.ENV = 'test';
@@ -222,13 +222,14 @@ gulp.task('package', (cb) => {
     // });
 
     // copy the needed additional files in the 'dist' folder
-    pump(
-        [
-            gulp.src(['README.md', 'LICENSE', 'CHANGELOG.md']),
-            file('package.json', JSON.stringify(targetPkgJson, null, 2)),
-            gulp.dest(config.outputDir)
-        ],
-        cb);
+    // pump(
+    //     [
+    //         gulp.src(['README.md', 'LICENSE', 'CHANGELOG.md']),
+    //         file('package.json', JSON.stringify(targetPkgJson, null, 2)),
+    //         gulp.dest(config.outputDir)
+    //     ],
+    //     cb);
+        cb()
 });
 
 // Bundles the library as UMD bundle using RollupJS
@@ -304,9 +305,7 @@ gulp.task('coveralls', () => {
 });
 
 // Lint, Sass to css, Inline templates & Styles and Compile
-gulp.task('compile', (cb) => {
-    runSequence( 'inline-templates', 'ngc', cb);
-});
+gulp.task('compile', gulp.series( 'inline-templates', 'ngc'));
 
 // Watch changes on (*.ts, *.sass, *.html) and Compile
 gulp.task('watch', () => {
@@ -314,14 +313,12 @@ gulp.task('watch', () => {
 });
 
 // Build the 'dist' folder (without publishing it to NPM)
-gulp.task('build', ['clean'], (cb) => {
-    runSequence('compile', 'package', 'bundle', cb);
-});
+gulp.task('build', gulp.series('clean', 'compile', 'package', 'bundle'));
 
 // Build and then Publish 'dist' folder to NPM
-gulp.task('publish', ['build'], (done) => {
+gulp.task('publish', gulp.series('build', (done) => {
     // run npm publish terminal command to publish the 'dist' folder only
     exec(`npm publish ${config.outputDir}`, execCallback(done));
-});
+}));
 
-gulp.task('default', ['build']);
+gulp.task('default', gulp.parallel('build'));

@@ -16,6 +16,7 @@ export class GalleryDirective implements OnInit {
   srcList: string[] = [];
 
   @Input() gallerize: string;
+  @Input() exclude: string;
   @Input() subtree: string = '';
   @Input() filter: Function;
 
@@ -37,10 +38,9 @@ export class GalleryDirective implements OnInit {
       }
 
       const images: GalleryImage[] = [];
-      const classes = (this.gallerize) ? this.gallerize.split(' ').map((className) => '.' + className) : '';
 
       // get all img elements from content
-      const imageElements = target.querySelectorAll(this.subtree + ` img${classes}`)
+      const imageElements = target.querySelectorAll(this.subtree + ` img${this.gallerize}`)
 
       if (!imageElements || !imageElements.length) {
         this.srcList = [];

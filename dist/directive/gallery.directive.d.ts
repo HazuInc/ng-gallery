@@ -7,6 +7,7 @@ export declare class GalleryDirective implements OnInit {
     content: string;
     srcList: string[];
     gallerize: string;
+    exclude: string;
     subtree: string;
     filter: Function;
     constructor(el: ElementRef, renderer: Renderer2, gallery: GalleryService);

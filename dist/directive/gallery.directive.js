@@ -32,9 +32,8 @@ var GalleryDirective = /** @class */ (function () {
                 _this.content = target.innerText;
             }
             var images = [];
-            var classes = (_this.gallerize) ? _this.gallerize.split(' ').map(function (className) { return '.' + className; }) : '';
             // get all img elements from content
-            var imageElements = target.querySelectorAll(_this.subtree + (" img" + classes));
+            var imageElements = target.querySelectorAll(_this.subtree + (" img" + _this.gallerize));
             if (!imageElements || !imageElements.length) {
                 _this.srcList = [];
                 return;
@@ -78,6 +77,10 @@ var GalleryDirective = /** @class */ (function () {
         Input(),
         __metadata("design:type", String)
     ], GalleryDirective.prototype, "gallerize", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], GalleryDirective.prototype, "exclude", void 0);
     __decorate([
         Input(),
         __metadata("design:type", String)
