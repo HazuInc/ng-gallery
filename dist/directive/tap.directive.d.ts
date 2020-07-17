@@ -6,7 +6,7 @@ export declare class TapDirective implements OnInit {
     private el;
     private renderer;
     tap: any;
-    tapClick: EventEmitter<{}>;
+    tapClick: EventEmitter<any>;
     constructor(gallery: GalleryService, el: ElementRef, renderer: Renderer2);
     ngOnInit(): void;
     /** Enable gestures if hammer is loaded */
