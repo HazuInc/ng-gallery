@@ -1,1 +1,0 @@
-{"version":3,"file":"gallery-thumb.config.js","sourceRoot":"","sources":["../inlined/config/gallery-thumb.config.ts"],"names":[],"mappings":"","sourcesContent":["export interface GalleryThumbConfig {\n    width?: number;\n    height?: number;\n    position?: string;\n    space?: number;\n}"]}

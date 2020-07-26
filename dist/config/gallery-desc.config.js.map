@@ -1,1 +1,0 @@
-{"version":3,"file":"gallery-desc.config.js","sourceRoot":"","sources":["../inlined/config/gallery-desc.config.ts"],"names":[],"mappings":"","sourcesContent":["export interface GalleryDescConfig {\n    width?: string;\n    height?: string;\n    position?: string;\n    overlay?: boolean;\n    text?: boolean;\n    counter?: boolean;\n    style?: any;\n}"]}

@@ -1,1 +1,0 @@
-{"version":3,"file":"gallery-play.config.js","sourceRoot":"","sources":["../inlined/config/gallery-play.config.ts"],"names":[],"mappings":"","sourcesContent":["export interface GalleryPlayConfig {\n    progress?: boolean;\n    autoplay?: boolean;\n    speed?: number;\n}\n"]}

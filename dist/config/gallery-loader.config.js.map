@@ -1,1 +1,0 @@
-{"version":3,"file":"gallery-loader.config.js","sourceRoot":"","sources":["../inlined/config/gallery-loader.config.ts"],"names":[],"mappings":"","sourcesContent":["export interface GalleryLoaderConfig {\n    width?: string;\n    height?: string;\n    position?: string;\n    icon?: string;\n}\n"]}

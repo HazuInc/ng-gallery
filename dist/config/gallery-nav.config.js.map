@@ -1,1 +1,0 @@
-{"version":3,"file":"gallery-nav.config.js","sourceRoot":"","sources":["../inlined/config/gallery-nav.config.ts"],"names":[],"mappings":"","sourcesContent":["/** TODO: Add options for navigation */\nexport interface GalleryNavConfig {\n    nextIcon?: string;\n    prevIcon?: string;\n    iconWidth?: string;\n    iconHeight?: string;\n    position?: string;\n}"]}

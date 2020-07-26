@@ -1,1 +1,0 @@
-{"version":3,"file":"gallery-bullet.config.js","sourceRoot":"","sources":["../inlined/config/gallery-bullet.config.ts"],"names":[],"mappings":"","sourcesContent":["export interface GalleryBulletConfig {\n    style?: any;\n    position?: string;\n}"]}
