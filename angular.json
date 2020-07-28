@@ -134,6 +134,41 @@
           }
         }
       }
+    },
+    "gallery-lib": {
+      "root": "projects/gallery-lib",
+      "sourceRoot": "projects/gallery-lib/src",
+      "projectType": "library",
+      "prefix": "gl",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/gallery-lib/tsconfig.lib.json",
+            "project": "projects/gallery-lib/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/gallery-lib/src/test.ts",
+            "tsConfig": "projects/gallery-lib/tsconfig.spec.json",
+            "karmaConfig": "projects/gallery-lib/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/gallery-lib/tsconfig.lib.json",
+              "projects/gallery-lib/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "ng-gallery"
